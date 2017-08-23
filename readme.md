@@ -1,3 +1,11 @@
-# typescript-module-starter
+# mungo
 
-A bare minimum starter repository for client side npm modules written in typescript. Includes `prettier` for linting, `karma` and `jasmine` for unit tests and `istanbul` for coverage. Uses `webpack` to transpile typescript when running tests. To get started, clone this repository and run npm install.
+Javascript implementation of MongoDB update operators.
+
+```ts
+import { modify } from 'mungo';
+
+const doc = { id: 'id', x: 10 };
+modify(doc, { $set: { x: 20 } });
+console.log(doc) // { id: 'id', x: 20 }
+```
