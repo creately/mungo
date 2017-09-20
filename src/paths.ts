@@ -86,6 +86,20 @@ export function makep(doc: any, path: Path): void {
     }
 }
 
+// fetch
+// fetch fetches the value on given path (if it exists)
+export function fetch(doc: any, path: Path): any {
+    let current = doc;
+    for (let i = 0, l = path.length; i < l; ++i) {
+        if (current === undefined) {
+            return undefined;
+        }
+        const segment = path[i];
+        current = current[segment];
+    }
+    return current;
+}
+
 // isObject
 // isObject checks whether the input is an object
 export function isObject(val: any) {
