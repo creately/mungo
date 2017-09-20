@@ -1,31 +1,24 @@
 import { modify } from '../';
 
 describe('modify', () => {
-  describe('$set', () => {
-    it('should add the field if it was missing', () => {
-      const doc: any = { id: 'i1', x: 10, y: 20 };
-      modify(doc, { $set: { z: 30 } });
-      expect(doc).toEqual({ id: 'i1', x: 10, y: 20, z: 30 });
-    });
+    const cases: any[] = [
+        // $set
+        { doc: { id: 'i1' }, mod: { $set: { a: 1 } }, exp: { id: 'i1', a: 1 } },
+        { doc: { id: 'i1', a: {} }, mod: { $set: { 'a.b': 1 } }, exp: { id: 'i1', a: { b: 1 } } },
+        { doc: { id: 'i1' }, mod: { $set: { 'a.b': 1 } }, exp: { id: 'i1', a: { b: 1 } } },
+        { doc: { id: 'i1', a: 1 }, mod: { $set: { a: 2 } }, exp: { id: 'i1', a: 2 } },
+        { doc: { id: 'i1', a: { b: 1 } }, mod: { $set: { 'a.b': 2 } }, exp: { id: 'i1', a: { b: 2 } } },
 
-    it('should replace the field with the new value', () => {
-      const doc: any = { id: 'i1', x: 10, y: 20, z: 35 };
-      modify(doc, { $set: { z: 30 } });
-      expect(doc).toEqual({ id: 'i1', x: 10, y: 20, z: 30 });
-    });
-  });
+        // $push
+        { doc: { id: 'i1' }, mod: { $push: { a: 1 } }, exp: { id: 'i1', a: [1] } },
+        { doc: { id: 'i1', a: [] }, mod: { $push: { a: 1 } }, exp: { id: 'i1', a: [1] } },
+        { doc: { id: 'i1', a: [1] }, mod: { $push: { a: 2 } }, exp: { id: 'i1', a: [1, 2] } },
+    ];
 
-  describe('$push', () => {
-    it('should create a new array if the field is not set', () => {
-      const doc: any = { id: 'i1', x: 10, y: 20 };
-      modify(doc, { $push: { z: 30 } });
-      expect(doc).toEqual({ id: 'i1', x: 10, y: 20, z: [30] });
+    cases.forEach(({ doc, mod, exp }) => {
+        it( `should modify ${JSON.stringify(doc)} to ${JSON.stringify(exp)} with ${JSON.stringify(mod)}`, () => {
+            modify(doc, mod);
+            expect(doc).toEqual(exp);
+        });
     });
-
-    it('should push the element to the end of the field', () => {
-      const doc: any = { id: 'i1', x: 10, y: 20, z: [30] };
-      modify(doc, { $push: { z: 35 } });
-      expect(doc).toEqual({ id: 'i1', x: 10, y: 20, z: [30, 35] });
-    });
-  });
 });
