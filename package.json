@@ -36,6 +36,7 @@
     "webpack": "^3.5.5"
   },
   "dependencies": {
-    "mingo": "^2.0.0"
+    "lodash.isequal": "^4.5.0",
+    "mingo": "^2.0.2"
   }
 }

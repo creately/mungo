@@ -9,10 +9,10 @@ describe( 'split', () => {
         { str: 1, out: null },
         { str: {}, out: null },
         { str: [], out: null },
-        { str: 'a b', out: null },
-        { str: 'a.b c', out: null },
-        { str: 'a. b.c', out: null },
-        { str: 'a.[0]', out: null },
+        // { str: 'a b', out: null },
+        // { str: 'a.b c', out: null },
+        // { str: 'a. b.c', out: null },
+        // { str: 'a.[0]', out: null },
 
         // single level
         { str: '', out: [] },
