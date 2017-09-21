@@ -1,6 +1,5 @@
 import mingo from 'mingo';
-import isequal from 'lodash.isequal';
-import { Path, check, fetch, makep } from './paths';
+import { Path, check, fetch, makep, isObject } from './paths';
 import { DataType, getType, getZero } from './types';
 
 // Operator
@@ -14,10 +13,10 @@ export abstract class Operator {
         if (!this.validateParams( doc, path, params )) {
             return false;
         }
-        if (!this.validateParentType( doc, path )) {
+        if (!this.validateParent( doc, path )) {
             return false;
         }
-        if (!this.validateValueType( doc, path )) {
+        if (!this.validateValue( doc, path )) {
             return false;
         }
         return true;
@@ -76,13 +75,13 @@ export abstract class Operator {
         return true;
     }
 
-    // validateParentType
-    protected validateParentType( doc: any, path: Path ): boolean {
+    // validateParent
+    protected validateParent( doc: any, path: Path ): boolean {
         return this.validateTypeAtPath( doc, this.getParentPath( path ), this.parentType );
     }
 
-    // validateValueType
-    protected validateValueType( doc: any, path: Path ): boolean {
+    // validateValue
+    protected validateValue( doc: any, path: Path ): boolean {
         return this.validateTypeAtPath( doc, path, this.valueType );
     }
 
@@ -192,32 +191,28 @@ export class PullOperator extends ArrayOperator {
     // operate
     public operate(doc: any, path: Path, params: any): void {
         const array = this.getValueAtPath( doc, path );
-        if (params && params.$elemMatch) {
-            const mq = new mingo.Query(params.$elemMatch);
-            for (let i = 0; i < array.length; ++i) {
-                if (mq.test(array[i])) {
-                    array.splice(i, 1);
-                    --i;
-                }
-            }
-        } else {
-            for (let i = 0; i < array.length; ++i) {
-                if (typeof params === 'object') {
-                    if (isequal(array[i], params)) {
+        if (!array) {
+            return;
+        }
+        for (let i = 0; i < array.length; ++i) {
+            if (isObject(params)) {
+                const mq = new mingo.Query(params);
+                for (let i = 0; i < array.length; ++i) {
+                    if (mq.test(array[i])) {
                         array.splice(i, 1);
                         --i;
                     }
-                } else if (array[i] === params) {
-                    array.splice(i, 1);
-                    --i;
                 }
+            } else if (array[i] === params) {
+                array.splice(i, 1);
+                --i;
             }
         }
     }
 
-    // validateParams
-    protected validateParams( _doc: any, _path: Path, _params: any ): boolean {
-        return true;
+    // prepareValue
+    protected prepareValue( _doc: any, _path: Path ): void {
+        // Do not prepare parent!
     }
 }
 
