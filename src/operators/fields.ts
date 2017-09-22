@@ -33,12 +33,10 @@ export abstract class FieldOperator extends Operator {
 
 // $rename
 // https://docs.mongodb.com/manual/reference/operator/update/rename/
-// operators.$rename = {}
 
 // $set
 // https://docs.mongodb.com/manual/reference/operator/update/set/
 export class SetOperator extends FieldOperator {
-  // operate
   public operate(doc: any, path: Path, params: any): void {
     this.setValueAtPath(doc, path, params);
   }
@@ -46,8 +44,12 @@ export class SetOperator extends FieldOperator {
 
 // $setOnInsert
 // https://docs.mongodb.com/manual/reference/operator/update/setOnInsert/
-// operators.$setOnInsert = {}
 
 // $unset
 // https://docs.mongodb.com/manual/reference/operator/update/unset/
-// operators.$unset = {}
+
+// operators
+// operators is a map of operator names to operator class instances
+export const operators: { [name: string]: Operator } = {
+  $set: new SetOperator(),
+};

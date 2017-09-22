@@ -14,7 +14,7 @@ export type Path = PathSegment[];
 // an object property is being accessed, if it's an integer,
 // TODO improve identifying inalid paths
 // TODO improve identifying quoted paths
-export function split(str: string): PathSegment[] | null {
+export function split(str: string): Path | null {
   if (typeof str !== 'string') {
     return null;
   }

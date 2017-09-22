@@ -20,8 +20,8 @@ describe('modify', () => {
     { doc: { a: [1] }, mod: { $pull: { a: 1 } } },
     { doc: { a: [1, 2, 3] }, mod: { $pull: { a: 2 } } },
     {
-      doc: { a: [{ a: 30, b: 20 }, { a: 30, b: 15 }, { a: 35, b: 25 }] },
-      mod: { $pull: { a: { $elemMatch: { a: 30 } } } },
+      doc: { a: [{ x: 30, y: 20 }, { x: 30, y: 15 }, { x: 35, y: 25 }] },
+      mod: { $pull: { a: { x: 30 } } },
     },
   ];
 

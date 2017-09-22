@@ -1,11 +1,11 @@
 import { Operator } from './operator';
-import { SetOperator } from './fields';
-import { PushOperator, PullOperator } from './arrays';
+import { operators as fieldOperators } from './fields';
+import { operators as arrayOperators } from './arrays';
+export { Operator } from './operator';
 
 // operators
 // operators ...
 export const operators: { [name: string]: Operator } = {
-  $set: new SetOperator(),
-  $push: new PushOperator(),
-  $pull: new PullOperator(),
+  ...fieldOperators,
+  ...arrayOperators,
 };
