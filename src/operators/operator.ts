@@ -1,4 +1,4 @@
-import { Path, check, fetch, makep, parent } from '../paths';
+import { Path, check, get, makep, parent } from '../paths';
 import { DataType, getType, getZero } from '../types';
 
 // Operator
@@ -51,7 +51,7 @@ export abstract class Operator {
 
   // setValueAtPath
   protected setValueAtPath(doc: any, path: Path, val: any): void {
-    const parentValue = fetch(doc, parent(path));
+    const parentValue = get(doc, parent(path));
     const lastSegment = path[path.length - 1];
     parentValue[lastSegment] = val;
   }
@@ -81,7 +81,7 @@ export abstract class Operator {
     if (type === DataType.any) {
       return true;
     }
-    const value = fetch(doc, path);
+    const value = get(doc, path);
     if (value === undefined) {
       return true;
     }
@@ -101,7 +101,7 @@ export abstract class Operator {
     if (this.valueType === DataType.any) {
       return;
     }
-    const currentValue = fetch(doc, path);
+    const currentValue = get(doc, path);
     if (currentValue) {
       return;
     }

@@ -1,4 +1,4 @@
-import { split, check, makep, fetch, parent } from '../paths';
+import { split, check, makep, get, parent } from '../paths';
 
 describe('split', () => {
   const cases: any[] = [
@@ -183,7 +183,7 @@ describe('fetch', () => {
 
   cases.forEach(({ doc, path, exp }) => {
     it(`should return "${exp}" if the document is ${JSON.stringify(doc)} and path is "${JSON.stringify(path)}"`, () => {
-      expect(fetch(doc, path)).toEqual(exp);
+      expect(get(doc, path)).toEqual(exp);
     });
   });
 });

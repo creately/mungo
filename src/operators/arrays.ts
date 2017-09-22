@@ -1,7 +1,7 @@
 import mingo from 'mingo';
 import { Operator } from './operator';
 import { DataType, getType } from '../types';
-import { Path, fetch } from '../paths';
+import { Path, get } from '../paths';
 
 // ArrayOperator
 // ArrayOperator is the base class for array operators.
@@ -39,7 +39,7 @@ export abstract class ArrayElementRemovingOperator extends ArrayOperator {
 // https://docs.mongodb.com/manual/reference/operator/update/pull/
 export class PullOperator extends ArrayElementRemovingOperator {
   public operate(doc: any, path: Path, params: any): void {
-    const array = fetch(doc, path);
+    const array = get(doc, path);
     if (!array) {
       return;
     }
@@ -67,7 +67,7 @@ export class PullOperator extends ArrayElementRemovingOperator {
 // https://docs.mongodb.com/manual/reference/operator/update/push/
 export class PushOperator extends ArrayOperator {
   public operate(doc: any, path: Path, params: any): void {
-    const array = fetch(doc, path);
+    const array = get(doc, path);
     array.push(params);
   }
 }

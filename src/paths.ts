@@ -90,9 +90,9 @@ export function makep(doc: any, path: Path): void {
   }
 }
 
-// fetch
-// fetch fetches the value on given path (if it exists)
-export function fetch(doc: any, path: Path): any {
+// get
+// get gets the value on given path (if it exists)
+export function get(doc: any, path: Path): any {
   let current = doc;
   for (let i = 0, l = path.length; i < l; ++i) {
     if (current === undefined) {
