@@ -1,4 +1,4 @@
-import { split, check, makep } from '../paths';
+import { split, check, makep, fetch } from '../paths';
 
 describe('split', () => {
   const cases: any[] = [
@@ -40,9 +40,9 @@ describe('split', () => {
     { str: 'a.b[1]', out: ['a', 'b', 1] },
   ];
 
-  cases.forEach(c => {
-    it(`should return '${JSON.stringify(c.out)}' if input is '${c.str}'`, () => {
-      expect(split(c.str)).toEqual(c.out);
+  cases.forEach(({ str, out }) => {
+    it(`should return '${JSON.stringify(out)}' if input is '${str}'`, () => {
+      expect(split(str)).toEqual(out);
     });
   });
 });
@@ -115,9 +115,9 @@ describe('check', () => {
     { out: false, doc: {}, path: [null] },
   ];
 
-  cases.forEach(c => {
-    it(`should return '${JSON.stringify(c.out)}' if input is '${JSON.stringify(c.path)}'`, () => {
-      expect(check(c.doc, c.path)).toEqual(c.out);
+  cases.forEach(({ doc, out, path }) => {
+    it(`should return '${JSON.stringify(out)}' if input is '${JSON.stringify(path)}'`, () => {
+      expect(check(doc, path)).toEqual(out);
     });
   });
 });
@@ -151,10 +151,40 @@ describe('makep', () => {
     { doc: { a: {}, b: [] }, path: ['x', 0, 1], exp: { a: {}, b: [], x: [[]] } },
   ];
 
-  cases.forEach(c => {
-    it(`should change the document to '${JSON.stringify(c.exp)}' if input is '${JSON.stringify(c.doc)}'`, () => {
-      makep(c.doc, c.path);
-      expect(c.doc).toEqual(c.exp);
+  cases.forEach(({ doc, path, exp }) => {
+    it(`should change the document to '${JSON.stringify(exp)}' if input is '${JSON.stringify(doc)}'`, () => {
+      makep(doc, path);
+      expect(doc).toEqual(exp);
     });
   });
+
+  it( 'should throw an error if the path is invalid', () => {
+      expect(() => makep({}, [ 'a', null ] as any)).toThrow();
+  });
+});
+
+
+describe( 'fetch', () => {
+    const cases: any[] = [
+      // empty path
+      { doc: {}, path: [], exp: {} },
+
+      // path to existing field
+      { doc: { a: 1 }, path: ['a'], exp: 1 },
+      { doc: { a: { b: 1 } }, path: ['a', 'b'], exp: 1 },
+      { doc: [1], path: [0], exp: 1 },
+      { doc: [[1]], path: [0, 0], exp: 1 },
+
+      // path to missing field
+      { doc: {}, path: ['a'], exp: undefined },
+      { doc: {}, path: ['a', 'b'], exp: undefined },
+      { doc: [], path: [0], exp: undefined },
+      { doc: [], path: [0, 1], exp: undefined },
+    ];
+
+    cases.forEach(({ doc, path, exp }) => {
+      it(`should return "${exp}" if the document is ${JSON.stringify(doc)} and path is "${JSON.stringify(path)}"`, () => {
+          expect(fetch(doc, path)).toEqual(exp);
+      });
+    });
 });

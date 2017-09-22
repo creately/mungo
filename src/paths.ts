@@ -83,6 +83,8 @@ export function makep(doc: any, path: Path): void {
       if (!parent[parentSegment]) {
         parent[parentSegment] = [];
       }
+    } else {
+      throw new Error('Unexpected path segment');
     }
     parent = parent[parentSegment];
   }
