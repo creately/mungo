@@ -1,5 +1,5 @@
 import mingo from 'mingo';
-import { Path, check, fetch, makep, isObject } from './paths';
+import { Path, check, fetch, makep } from './paths';
 import { DataType, getType, getZero } from './types';
 
 // Operator
@@ -195,7 +195,7 @@ export class PullOperator extends ArrayOperator {
       return;
     }
     for (let i = 0; i < array.length; ++i) {
-      if (isObject(params)) {
+      if (getType(params) === DataType.object) {
         const mq = new mingo.Query(params);
         for (let i = 0; i < array.length; ++i) {
           if (mq.test(array[i])) {

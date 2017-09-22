@@ -1,3 +1,5 @@
+import { getType, DataType } from './types';
+
 // PathSegment
 // PathSegment is a path segment
 export type PathSegment = string | number;
@@ -50,11 +52,11 @@ export function check(doc: any, path: Path): boolean {
     }
     const segment = path[i];
     if (typeof segment === 'string') {
-      if (!isObject(parent)) {
+      if (getType(parent) !== DataType.object) {
         return false;
       }
     } else if (typeof segment === 'number') {
-      if (!isArray(parent)) {
+      if (getType(parent) !== DataType.array) {
         return false;
       }
     } else {
@@ -98,16 +100,4 @@ export function fetch(doc: any, path: Path): any {
     current = current[segment];
   }
   return current;
-}
-
-// isObject
-// isObject checks whether the input is an object
-export function isObject(val: any) {
-  return typeof val === 'object' && val !== null && !Array.isArray(val);
-}
-
-// isArray
-// isArray checks whether the input is an array
-export function isArray(val: any) {
-  return Array.isArray(val);
 }
