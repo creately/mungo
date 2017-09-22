@@ -104,6 +104,14 @@ export function get(doc: any, path: Path): any {
   return current;
 }
 
+// set
+// set sets the given value on given path on the document
+export function set(doc: any, path: Path, val: any): void {
+  const parentValue = get(doc, parent(path));
+  const lastSegment = path[path.length - 1];
+  parentValue[lastSegment] = val;
+}
+
 // parent
 // parent returns the path without the last path segment.
 export function parent(path: Path) {

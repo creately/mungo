@@ -1,4 +1,4 @@
-import { Path, check, get, makep, parent } from '../paths';
+import { Path, check, get, set, makep, parent } from '../paths';
 import { DataType, getType, getZero } from '../types';
 
 // Operator
@@ -49,13 +49,6 @@ export abstract class Operator {
   // operate performs the primary function of the operator.
   public abstract operate(doc: any, path: Path, params: any): void;
 
-  // setValueAtPath
-  protected setValueAtPath(doc: any, path: Path, val: any): void {
-    const parentValue = get(doc, parent(path));
-    const lastSegment = path[path.length - 1];
-    parentValue[lastSegment] = val;
-  }
-
   // validatePath
   protected validatePath(doc: any, path: Path): boolean {
     return check(doc, path);
@@ -105,6 +98,6 @@ export abstract class Operator {
     if (currentValue) {
       return;
     }
-    this.setValueAtPath(doc, path, getZero(this.valueType));
+    set(doc, path, getZero(this.valueType));
   }
 }

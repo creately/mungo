@@ -1,6 +1,6 @@
 import { Operator } from './operator';
 import { DataType } from '../types';
-import { Path } from '../paths';
+import { Path, set } from '../paths';
 
 // FieldOperator
 // FieldOperator is the base class for object operators.
@@ -41,7 +41,7 @@ export abstract class FieldOperator extends Operator {
 // https://docs.mongodb.com/manual/reference/operator/update/set/
 export class SetOperator extends FieldOperator {
   public operate(doc: any, path: Path, params: any): void {
-    this.setValueAtPath(doc, path, params);
+    set(doc, path, params);
   }
 }
 
