@@ -103,3 +103,9 @@ export function fetch(doc: any, path: Path): any {
   }
   return current;
 }
+
+// parent
+// parent returns the path without the last path segment.
+export function parent(path: Path) {
+  return path.slice(0, path.length - 1);
+}
