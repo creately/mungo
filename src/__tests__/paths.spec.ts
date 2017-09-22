@@ -158,33 +158,32 @@ describe('makep', () => {
     });
   });
 
-  it( 'should throw an error if the path is invalid', () => {
-      expect(() => makep({}, [ 'a', null ] as any)).toThrow();
+  it('should throw an error if the path is invalid', () => {
+    expect(() => makep({}, ['a', null] as any)).toThrow();
   });
 });
 
+describe('fetch', () => {
+  const cases: any[] = [
+    // empty path
+    { doc: {}, path: [], exp: {} },
 
-describe( 'fetch', () => {
-    const cases: any[] = [
-      // empty path
-      { doc: {}, path: [], exp: {} },
+    // path to existing field
+    { doc: { a: 1 }, path: ['a'], exp: 1 },
+    { doc: { a: { b: 1 } }, path: ['a', 'b'], exp: 1 },
+    { doc: [1], path: [0], exp: 1 },
+    { doc: [[1]], path: [0, 0], exp: 1 },
 
-      // path to existing field
-      { doc: { a: 1 }, path: ['a'], exp: 1 },
-      { doc: { a: { b: 1 } }, path: ['a', 'b'], exp: 1 },
-      { doc: [1], path: [0], exp: 1 },
-      { doc: [[1]], path: [0, 0], exp: 1 },
+    // path to missing field
+    { doc: {}, path: ['a'], exp: undefined },
+    { doc: {}, path: ['a', 'b'], exp: undefined },
+    { doc: [], path: [0], exp: undefined },
+    { doc: [], path: [0, 1], exp: undefined },
+  ];
 
-      // path to missing field
-      { doc: {}, path: ['a'], exp: undefined },
-      { doc: {}, path: ['a', 'b'], exp: undefined },
-      { doc: [], path: [0], exp: undefined },
-      { doc: [], path: [0, 1], exp: undefined },
-    ];
-
-    cases.forEach(({ doc, path, exp }) => {
-      it(`should return "${exp}" if the document is ${JSON.stringify(doc)} and path is "${JSON.stringify(path)}"`, () => {
-          expect(fetch(doc, path)).toEqual(exp);
-      });
+  cases.forEach(({ doc, path, exp }) => {
+    it(`should return "${exp}" if the document is ${JSON.stringify(doc)} and path is "${JSON.stringify(path)}"`, () => {
+      expect(fetch(doc, path)).toEqual(exp);
     });
+  });
 });
