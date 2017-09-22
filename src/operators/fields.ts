@@ -3,7 +3,10 @@ import { DataType } from '../types';
 import { Path } from '../paths';
 
 // FieldOperator
-// FieldOperator is the base class for array operators
+// FieldOperator is the base class for object operators.
+// These operators perform changes to a particular field.
+// The only requirement for these operators are that the
+// parent of of the given path should be an object.
 export abstract class FieldOperator extends Operator {
   // parentType
   protected get parentType(): DataType {
