@@ -1,10 +1,26 @@
-import { Path, check, fetch, makep } from '../paths';
+import { Path, check, fetch, makep, parent } from '../paths';
 import { DataType, getType, getZero } from '../types';
 
 // Operator
 // Operator is the base class all operators will extend.
 export abstract class Operator {
+  // parentType
+  // parentType defines the expected type of the field which
+  // is available on the document as parent of path value.
+  protected get parentType(): DataType {
+    return DataType.any;
+  }
+
+  // valueType
+  // valueType defines the expected type of the field which
+  // is available on the document exactly at the path.
+  protected get valueType(): DataType {
+    return DataType.any;
+  }
+
   // validate
+  // validate validates the document, path and modifier params.
+  // It will return false if any of these validation fails.
   public validate(doc: any, path: Path, params: any): boolean {
     if (!this.validatePath(doc, path)) {
       return false;
@@ -22,28 +38,16 @@ export abstract class Operator {
   }
 
   // prepare
+  // prepare prepares the document before running the operator on it.
+  // Example: makes sure the path up to created fields exists, etc.
   public prepare(doc: any, path: Path, _params: any): void {
     this.prepareParent(doc, path);
     this.prepareValue(doc, path);
   }
 
   // operate
+  // operate performs the primary function of the operator.
   public abstract operate(doc: any, path: Path, params: any): void;
-
-  // parentType
-  protected get parentType(): DataType {
-    return DataType.any;
-  }
-
-  // valueType
-  protected get valueType(): DataType {
-    return DataType.any;
-  }
-
-  // getParentPath
-  protected getParentPath(path: Path): Path {
-    return path.slice(0, path.length - 1);
-  }
 
   // getValueAtPath
   protected getValueAtPath(doc: any, path: Path): any {
@@ -52,16 +56,9 @@ export abstract class Operator {
 
   // setValueAtPath
   protected setValueAtPath(doc: any, path: Path, val: any): void {
-    const parent = fetch(doc, this.getParentPath(path));
+    const parentValue = fetch(doc, parent(path));
     const lastSegment = path[path.length - 1];
-    parent[lastSegment] = val;
-  }
-
-  // unsetValueAtPath
-  protected unsetValueAtPath(doc: any, path: Path): void {
-    const parent = fetch(doc, this.getParentPath(path));
-    const lastSegment = path[path.length - 1];
-    delete parent[lastSegment];
+    parentValue[lastSegment] = val;
   }
 
   // validatePath
@@ -76,7 +73,7 @@ export abstract class Operator {
 
   // validateParent
   protected validateParent(doc: any, path: Path): boolean {
-    return this.validateTypeAtPath(doc, this.getParentPath(path), this.parentType);
+    return this.validateTypeAtPath(doc, parent(path), this.parentType);
   }
 
   // validateValue
