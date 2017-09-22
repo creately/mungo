@@ -49,11 +49,6 @@ export abstract class Operator {
   // operate performs the primary function of the operator.
   public abstract operate(doc: any, path: Path, params: any): void;
 
-  // getValueAtPath
-  protected getValueAtPath(doc: any, path: Path): any {
-    return fetch(doc, path);
-  }
-
   // setValueAtPath
   protected setValueAtPath(doc: any, path: Path, val: any): void {
     const parentValue = fetch(doc, parent(path));
