@@ -202,14 +202,12 @@ describe('set', () => {
   });
 });
 
-describe( 'parent', () => {
-    const cases: any[] = [
-      { path: [], exp: [] },
-    ];
+describe('parent', () => {
+  const cases: any[] = [{ path: [], exp: [] }];
 
-    cases.forEach(({ path, exp }) => {
-      it(`should return "${JSON.stringify(exp)}" for ${JSON.stringify(path)}`, () => {
-          expect(parent(path)).toEqual(exp);
-      })
+  cases.forEach(({ path, exp }) => {
+    it(`should return "${JSON.stringify(exp)}" for ${JSON.stringify(path)}`, () => {
+      expect(parent(path)).toEqual(exp);
     });
+  });
 });
