@@ -1,6 +1,6 @@
 import { Operator } from './operator';
 import { DataType } from '../types';
-import { Path, set } from '../paths';
+import { Path, set, unset } from '../paths';
 
 // FieldOperator
 // FieldOperator is the base class for object operators.
@@ -50,9 +50,15 @@ export class SetOperator extends FieldOperator {
 
 // $unset
 // https://docs.mongodb.com/manual/reference/operator/update/unset/
+export class UnSetOperator extends FieldOperator {
+  public operate(doc: any, path: Path): void {
+    unset(doc, path);
+  }
+}
 
 // operators
 // operators is a map of operator names to operator class instances
 export const operators: { [name: string]: Operator } = {
   $set: new SetOperator(),
+  $unset: new UnSetOperator()
 };
