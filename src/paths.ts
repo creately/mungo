@@ -114,7 +114,7 @@ export function set(doc: any, path: Path, val: any): void {
 
 //unset
 // delets the given field from the document
-export function unset( doc: any, path: Path ): void {
+export function unset(doc: any, path: Path): void {
   const parentValue = get(doc, parent(path));
   const lastSegment = path[path.length - 1];
   delete parentValue[lastSegment];

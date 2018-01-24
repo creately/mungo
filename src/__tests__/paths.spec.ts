@@ -204,9 +204,9 @@ describe('set', () => {
 
 describe('unset', () => {
   const cases: any[] = [
-    { doc: { a: 1, b: { c: '1', d: '2' } }, path: [ 'b', 'c'], exp: { a : 1, b : { d: '2' } }},
-    { doc: { a: 1, b: '1' }, path: [ 'b' ], exp: { a : 1 } },
-    { doc: { a: 1 }, path: [ 'a' ], exp: {} },
+    { doc: { a: 1, b: { c: '1', d: '2' } }, path: ['b', 'c'], exp: { a: 1, b: { d: '2' } } },
+    { doc: { a: 1, b: '1' }, path: ['b'], exp: { a: 1 } },
+    { doc: { a: 1 }, path: ['a'], exp: {} },
   ];
 
   cases.forEach(({ doc, path, exp }) => {
@@ -216,7 +216,6 @@ describe('unset', () => {
     });
   });
 });
-
 
 describe('parent', () => {
   const cases: any[] = [{ path: [], exp: [] }];

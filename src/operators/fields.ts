@@ -60,5 +60,5 @@ export class UnSetOperator extends FieldOperator {
 // operators is a map of operator names to operator class instances
 export const operators: { [name: string]: Operator } = {
   $set: new SetOperator(),
-  $unset: new UnSetOperator()
+  $unset: new UnSetOperator(),
 };
