@@ -3,6 +3,7 @@ import { modify } from '../';
 describe('modify', () => {
   const cases: any[] = [
     // $set
+    { doc: {}, mod: { $set: {} } },
     { doc: {}, mod: { $set: { a: 10 } } },
     { doc: { a: 0 }, mod: { $set: { a: 10 } } },
     { doc: { a: 1 }, mod: { $set: { a: 10 } } },
@@ -13,6 +14,7 @@ describe('modify', () => {
     { doc: { a: null }, mod: { $set: { 'a.b': 10 } } },
 
     // $push
+    { doc: {}, mod: { $push: {} } },
     { doc: {}, mod: { $push: { a: 10 } } },
     { doc: { a: [] }, mod: { $push: { a: 10 } } },
     { doc: { a: [0] }, mod: { $push: { a: 10 } } },
@@ -31,6 +33,7 @@ describe('modify', () => {
     { doc: { a: { b: null } }, mod: { $push: { 'a.b': 10 } } },
 
     // pull
+    { doc: {}, mod: { $pull: {} } },
     { doc: {}, mod: { $pull: { a: 10 } } },
     { doc: { a: {} }, mod: { $pull: { a: 10 } } },
     { doc: { a: [] }, mod: { $pull: { a: 10 } } },
