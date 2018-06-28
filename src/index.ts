@@ -26,6 +26,7 @@ export function modify(doc: any, modifier: IModifier): boolean {
       return false;
     }
     let operatorModifier = modifier[operatorName];
+    let operatorHasChange = false;
     for (let pathString in operatorModifier) {
       if (!operatorModifier.hasOwnProperty(pathString)) {
         continue;
@@ -36,6 +37,10 @@ export function modify(doc: any, modifier: IModifier): boolean {
       }
       const params = operatorModifier[pathString];
       operations.push({ operator, path, params });
+      operatorHasChange = true;
+    }
+    if (!operatorHasChange) {
+      return false;
     }
   }
   for (let i = 0, l = operations.length; i < l; ++i) {

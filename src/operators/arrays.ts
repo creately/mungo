@@ -21,6 +21,13 @@ export abstract class ArrayOperator extends Operator {
 // there. And validation will fail if a value exists in the document
 // at given path which is not an array.
 export abstract class ArrayElementRemovingOperator extends ArrayOperator {
+  // prepareParent
+  // prepareParent usually prepares the parent but for these operators
+  // it should not do it. Override the method and do nothing inside it.
+  protected prepareParent(_doc: any, _path: Path): void {
+    // Do not prepare parent!
+  }
+
   // prepareValue
   // prepareValue usually prepares the value but for these operators
   // it should not do it. Override the method and do nothing inside it.
