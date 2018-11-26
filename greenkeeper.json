@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        ".mongo-rest/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
