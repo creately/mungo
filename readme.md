@@ -1,5 +1,7 @@
 # mungo
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/creately/mungo.svg)](https://greenkeeper.io/)
+
 Javascript implementation of MongoDB update operators.
 
 ## Getting Started
