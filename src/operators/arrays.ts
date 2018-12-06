@@ -1,4 +1,4 @@
-import mingo from 'mingo';
+import * as mingo from 'mingo';
 import { Operator } from './operator';
 import { DataType, getType } from '../types';
 import { Path, get } from '../paths';

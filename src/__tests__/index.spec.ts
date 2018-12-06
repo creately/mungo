@@ -1,6 +1,26 @@
-import { modify } from '../';
+import { MongoClient, Db, Collection } from 'mongodb';
+import { modify } from '..';
 
 describe('modify', () => {
+  let mongoUrl = 'mongodb://localhost:27017';
+  let mongoClient: MongoClient;
+  let mongoDatabase: Db;
+  let mongoCollection: Collection;
+
+  beforeAll(async () => {
+    mongoClient = await MongoClient.connect(
+      mongoUrl,
+      { useNewUrlParser: true }
+    );
+    mongoDatabase = mongoClient.db('testmungo');
+    mongoCollection = mongoDatabase.collection('test');
+  });
+
+  afterAll(async () => {
+    await mongoCollection.remove({});
+    mongoClient.close();
+  });
+
   const cases: any[] = [
     // $set
     { doc: {}, mod: { $set: {} } },
@@ -61,34 +81,25 @@ describe('modify', () => {
     { doc: { a: { b: null } }, mod: { $pull: { 'a.b': 10 } } },
   ];
 
-  async function request(method: string, body: object) {
-    const response = await fetch(`http://localhost:3000/${method}`, {
-      method: 'post',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    return await response.json();
+  function randomId(): string {
+    return Math.random()
+      .toString(36)
+      .slice(2);
   }
 
   cases.forEach(({ doc, mod }) => {
     it(`should update ${JSON.stringify(doc)} with ${JSON.stringify(mod)}`, async () => {
-      doc._id = Math.random()
-        .toString(36)
-        .slice(2);
-      await request('insert', { document: doc });
-      const result = await request('update', { selector: { _id: doc._id }, modifier: mod });
-      const modified = modify(doc, mod);
-
-      if (result.err) {
-        expect(modified).toBe(false, 'expected document not to be modified on client');
-      } else {
-        expect(modified).toBe(true, 'expected document to be modified on client');
+      doc._id = randomId();
+      await mongoCollection.insertOne(doc);
+      const updateOnClient = modify(doc, mod);
+      try {
+        await mongoCollection.updateOne({ _id: doc._id }, mod);
+        const result = await mongoCollection.findOne({ _id: doc._id });
+        expect(updateOnClient).toBe(true);
         expect(doc).toEqual(result);
+      } catch (err) {
+        expect(updateOnClient).toBe(false);
       }
     });
-  });
-
-  afterAll(async () => {
-    await request('remove', { selector: {} });
   });
 });

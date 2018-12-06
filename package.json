@@ -5,13 +5,11 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "clean": "rimraf coverage dist",
     "build": "tsc",
     "lint": "prettier --print-width 120 --single-quote --trailing-comma es5 --write \"src/**/*.ts\"",
-    "test": "karma start karma.conf.js --single-run",
-    "test:mongo": "cd .mongo-rest && PORT=3000 MONGO_URL=mongodb://localhost:27017/mungo node index.js",
-    "test:watch": "karma start karma.conf.js",
-    "test:cover": "npm run test && open coverage/index.html",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch --coverage",
+    "test:mongo": "docker run -it -rm --name testmungo -p 27017:27017 mongo",
     "prepublish": "npm run clean && npm run lint && npm run build"
   },
   "keywords": [
@@ -22,18 +20,13 @@
   "author": "Muhammed Thanish <mnmtanish@gmail.com> (http://thanish.me/)",
   "license": "MIT",
   "devDependencies": {
-    "@types/jasmine": "^2.8.8",
-    "istanbul-instrumenter-loader": "^3.0.1",
-    "jasmine-core": "^3.1.0",
-    "karma": "^2.0.4",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage-istanbul-reporter": "^2.0.1",
-    "karma-jasmine": "^1.1.2",
-    "karma-webpack": "^3.0.0",
+    "@types/jest": "^23.3.10",
+    "@types/mongodb": "^3.1.17",
+    "jest": "^23.6.0",
+    "mongodb": "^3.1.10",
     "prettier": "^1.13.6",
-    "rimraf": "^2.6.2",
-    "ts-loader": "^4.4.2",
-    "typescript": "^2.9.2",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.1",
     "webpack": "^4.12.2"
   },
   "dependencies": {
