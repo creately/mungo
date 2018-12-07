@@ -19,7 +19,12 @@ export function invert(doc: any, modifier: IModifier): IModifier | null {
   for (let i = 0, l = operations.length; i < l; ++i) {
     const operation = operations[i];
     const invertedOp = operation.operator.invert(doc, operation.path, operation.params);
-    Object.assign( inverted, invertedOp );
+    for ( const key in invertedOp ) {
+      if ( !( key in inverted )) {
+        inverted[key] = {};
+      }
+      Object.assign( inverted[key], invertedOp[key] );
+    }
   }
   return inverted;
 }
