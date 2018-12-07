@@ -1,5 +1,5 @@
-import { Path, check, get } from '../paths';
-import { DataType, getType } from '../types';
+import { Path, check, get } from './pathutil';
+import { DataType, getType } from './typeutil';
 
 /**
  * Validator

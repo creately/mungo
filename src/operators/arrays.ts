@@ -1,7 +1,7 @@
 import * as mingo from 'mingo';
-import { Operator } from './operator';
-import { DataType, getType } from '../types';
-import { Path, get } from '../paths';
+import { Operator } from '../framework/operator';
+import { DataType, getType } from '../framework/typeutil';
+import { Path, get } from '../framework/pathutil';
 
 /**
  * ArrayOperator
@@ -68,6 +68,10 @@ class PullOperator extends ArrayElementRemovingOperator {
       }
     }
   }
+  public invert(_doc: any, _path: Path, _params: any): any {
+    // FIXME: implement inverting the pull operator
+    return {};
+  }
 }
 
 /**
@@ -83,6 +87,10 @@ class PushOperator extends ArrayOperator {
   public operate(doc: any, path: Path, params: any): void {
     const array = get(doc, path);
     array.push(params);
+  }
+  public invert(_doc: any, _path: Path, _params: any): any {
+    // FIXME: implement inverting the pull operator
+    return {};
   }
 }
 

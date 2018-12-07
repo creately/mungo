@@ -1,4 +1,4 @@
-import { DataType, getZero, getType } from '../types';
+import { DataType, getZero, getType } from '../typeutil';
 
 describe('getType', () => {
   const cases: any[] = [

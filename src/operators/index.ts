@@ -1,7 +1,6 @@
-import { Operator } from './operator';
+import { Operator } from '../framework/operator';
 import { operators as fieldOperators } from './fields';
 import { operators as arrayOperators } from './arrays';
-export { Operator } from './operator';
 
 // operators
 // operators ...

@@ -1,5 +1,5 @@
-import { Path, get, set, makep, parent } from '../paths';
-import { DataType, getZero } from '../types';
+import { Path, get, set, makep, parent } from './pathutil';
+import { DataType, getZero } from './typeutil';
 import { Validator } from './validator';
 
 /**
@@ -46,6 +46,12 @@ export abstract class Operator {
    * operate modifies the given document using given parameters.
    */
   public abstract operate(doc: any, path: Path, params: any): void;
+
+  /**
+   * invert
+   * invert generates the inverter of modifier using the document.
+   */
+  public abstract invert(doc: any, path: Path, params: any): any;
 
   /**
    * validate

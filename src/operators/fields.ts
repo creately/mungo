@@ -1,6 +1,6 @@
-import { Operator } from './operator';
-import { DataType } from '../types';
-import { Path, set, unset } from '../paths';
+import { Operator } from '../framework/operator';
+import { DataType } from '../framework/typeutil';
+import { Path, get, set, unset } from '../framework/pathutil';
 
 /**
  * FieldOperator
@@ -53,16 +53,21 @@ class SetOperator extends FieldOperator {
   public operate(doc: any, path: Path, params: any): void {
     set(doc, path, params);
   }
+  public invert(doc: any, path: Path, _params: any): any {
+    const currentValue = get(doc, path);
+    if (currentValue === undefined) {
+      return { $unset: { [path.join('.')]: true } };
+    }
+    return { $set: { [path.join('.')]: currentValue } };
+  }
 }
 
 /**
  * $setOnInsert
  * https://docs.mongodb.com/manual/reference/operator/update/setOnInsert/
  */
-class SetOnInsertOperator extends FieldOperator {
-  public operate(doc: any, path: Path, params: any): void {
-    set(doc, path, params);
-  }
+class SetOnInsertOperator extends SetOperator {
+  // ...
 }
 
 /**
@@ -72,6 +77,13 @@ class SetOnInsertOperator extends FieldOperator {
 class UnSetOperator extends FieldOperator {
   public operate(doc: any, path: Path): void {
     unset(doc, path);
+  }
+  public invert(doc: any, path: Path, _params: any): any {
+    const currentValue = get(doc, path);
+    if (currentValue === undefined) {
+      return {};
+    }
+    return { $set: { [path.join('.')]: currentValue } };
   }
 }
 
