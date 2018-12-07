@@ -9,7 +9,7 @@
     "lint": "prettier --print-width 120 --single-quote --trailing-comma es5 --write \"src/**/*.ts\"",
     "test": "MONGO_URL='mongodb://localhost:27017' jest --coverage",
     "test:watch": "MONGO_URL='mongodb://localhost:27017' jest --watch --coverage",
-    "prepublish": "npm run clean && npm run lint && npm run build"
+    "prepublish": "npm run lint && npm run build"
   },
   "keywords": [
     "mongo",
