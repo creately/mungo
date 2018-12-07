@@ -1,4 +1,4 @@
-import { getType, DataType } from './types';
+import { getType, DataType } from './typeutil';
 
 // PathSegment
 // PathSegment is a path segment

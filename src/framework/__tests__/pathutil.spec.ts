@@ -1,4 +1,4 @@
-import { split, check, makep, get, set, parent, unset } from '../paths';
+import { split, check, makep, get, set, parent, unset } from '../pathutil';
 
 describe('split', () => {
   const cases: any[] = [
