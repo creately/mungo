@@ -19,12 +19,11 @@
   "author": "Muhammed Thanish <mnmtanish@gmail.com> (http://thanish.me/)",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^23.3.14",
-    "@types/mongodb": "^3.1.27",
+    "@types/jest": "^24.0.13",
     "jest": "^24.8.0",
     "mongodb": "^3.2.6",
     "prettier": "^1.17.1",
-    "ts-jest": "^23.10.5",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.4.5",
     "webpack": "^4.32.2"
   },

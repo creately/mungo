@@ -1,12 +1,12 @@
-import { MongoClient, Db, Collection } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import { modify } from '../../modify';
 import { invert } from '../../invert';
 
 export function testOperator(description: string, cases: any[]) {
   describe(description, () => {
-    let mongoClient: MongoClient;
-    let database: Db;
-    let collection: Collection;
+    let mongoClient: any;
+    let database: any;
+    let collection: any;
 
     beforeAll(async () => {
       mongoClient = await MongoClient.connect(process.env.MONGO_URL as string, { useNewUrlParser: true });
