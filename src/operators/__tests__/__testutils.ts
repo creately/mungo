@@ -9,10 +9,7 @@ export function testOperator(description: string, cases: any[]) {
     let collection: Collection;
 
     beforeAll(async () => {
-      mongoClient = await MongoClient.connect(
-        process.env.MONGO_URL as string,
-        { useNewUrlParser: true }
-      );
+      mongoClient = await MongoClient.connect(process.env.MONGO_URL as string, { useNewUrlParser: true });
       database = mongoClient.db('testmungo');
       collection = database.collection(`col-${Math.random()}`);
     });
@@ -22,14 +19,14 @@ export function testOperator(description: string, cases: any[]) {
       await mongoClient.close();
     });
 
-    cases.forEach(({ document, modifier, modified, inverted }, idx ) => {
+    cases.forEach(({ document, modifier, modified, inverted }, idx) => {
       it(`#${idx}: should modify ${JSON.stringify(document)} with ${JSON.stringify(modifier)}`, async () => {
         // NOTE: create and insert the document
         document._id = `doc-${Math.random()}`;
         await collection.insertOne(document);
 
         // NOTE: modify the document on the client
-        const updated = JSON.parse( JSON.stringify( document ));
+        const updated = JSON.parse(JSON.stringify(document));
         const isModified = modify(updated, modifier);
 
         // NOTE: try to update the document on server and check errors
@@ -37,7 +34,7 @@ export function testOperator(description: string, cases: any[]) {
           await collection.updateOne({ _id: document._id }, modifier);
           expect(isModified).toBe(true);
         } catch (err) {
-          expect( modified ).toEqual( null );
+          expect(modified).toEqual(null);
           expect(isModified).toBe(false);
           return;
         }
@@ -48,7 +45,7 @@ export function testOperator(description: string, cases: any[]) {
         expect(updated).toEqual({ _id: document._id, ...modified });
 
         // NOTE: create the inverter and make sure they match
-        expect( inverted ).toEqual( invert( document, modifier ) );
+        expect(inverted).toEqual(invert(document, modifier));
       });
     });
   });

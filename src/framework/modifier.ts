@@ -1,5 +1,5 @@
 import { Path, split } from './pathutil';
-import { Operator } from "./operator";
+import { Operator } from './operator';
 import { operators } from '../operators';
 
 // IParameter
@@ -24,7 +24,7 @@ export interface IOperation {
 
 // getOperations
 // getOperations ...
-export function getOperations( modifier: IModifier ): IOperation[] | null {
+export function getOperations(modifier: IModifier): IOperation[] | null {
   const operations: { operator: Operator; path: Path; params: any }[] = [];
   for (const operatorName in modifier) {
     if (!modifier.hasOwnProperty(operatorName)) {

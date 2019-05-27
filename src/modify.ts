@@ -3,7 +3,7 @@ import { IModifier, getOperations } from './framework/modifier';
 // modify
 // modify ...
 export function modify(doc: any, modifier: IModifier): boolean {
-  const operations = getOperations( modifier );
+  const operations = getOperations(modifier);
   if (!operations) {
     return false;
   }

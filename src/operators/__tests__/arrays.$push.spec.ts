@@ -11,7 +11,7 @@ testOperator('Array Operators: $push', [
   {
     document: {},
     modifier: { $push: { a: 10 } },
-    modified: { a: [10]},
+    modified: { a: [10] },
     inverted: {},
   },
   {
@@ -47,7 +47,7 @@ testOperator('Array Operators: $push', [
   {
     document: {},
     modifier: { $push: { 'a.b': 10 } },
-    modified: { a: { b: [10]}},
+    modified: { a: { b: [10] } },
     inverted: {},
   },
   {
@@ -71,7 +71,7 @@ testOperator('Array Operators: $push', [
   {
     document: { a: {} },
     modifier: { $push: { 'a.b': 10 } },
-    modified: { a: { b: [10]} },
+    modified: { a: { b: [10] } },
     inverted: {},
   },
   {
