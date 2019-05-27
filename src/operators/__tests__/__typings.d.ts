@@ -3,5 +3,5 @@
 declare var process: any;
 
 declare module 'mongodb' {
-    const MongoClient: any;
+  const MongoClient: any;
 }
