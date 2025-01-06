@@ -1,6 +1,6 @@
 {
   "name": "@creately/mungo",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -28,6 +28,6 @@
     "webpack": "^4.32.2"
   },
   "dependencies": {
-    "mingo": "^2.3.5"
+    "mingo": "^6.5.1"
   }
 }
