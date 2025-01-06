@@ -62,7 +62,13 @@ testOperator('Array Operators: $pull', [
     inverted: {},
   },
   {
-    document: { a: [{ x: 30, y: 20 }, { x: 30, y: 15 }, { x: 35, y: 25 }] },
+    document: {
+      a: [
+        { x: 30, y: 20 },
+        { x: 30, y: 15 },
+        { x: 35, y: 25 },
+      ],
+    },
     modifier: { $pull: { a: { x: 30 } } },
     modified: { a: [{ x: 35, y: 25 }] },
     inverted: {},

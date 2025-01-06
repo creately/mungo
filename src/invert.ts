@@ -17,9 +17,9 @@ export function invert(doc: any, modifier: IModifier): IModifier | null {
     }
   }
   for (let i = 0, l = operations.length; i < l; ++i) {
-    const operation = operations[i];
-    const invertedOp = operation.operator.invert(doc, operation.path, operation.params);
-    for (const key in invertedOp) {
+    const operation: any = operations[i];
+    const invertedOp: any = operation.operator.invert(doc, operation.path, operation.params);
+    for (const key in invertedOp as any) {
       if (!(key in inverted)) {
         inverted[key] = {};
       }
